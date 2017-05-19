@@ -16,28 +16,26 @@
                 <li><a href="#contact">相册</a></li>
                 <li><a href="#contact">音乐</a></li>
                 <li><a href="#contact">联系我</a></li>
+                @if(Session::has('user'))
+                    <li >
+                            <div style="background-color: transparent;"  class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <img style="padding-right: 10px; height:35px" src="http://img.mukewang.com/58101c80000162fb01000100-100-100.jpg">
+                            </div>
+                            <ul class="dropdown-menu" >
+                                <li><a href="{{url('/loginOut')}}">个人信息</a></li>
+                                <li><a href="{{url('/loginOut')}}">登出</a></li>
+                            </ul>
+                    </li>
+                @else
+                    <li><a href="{{url('/login')}}">登陆</a></li>
+                    <li><a href="{{url('/regist')}}">注册</a></li>
+                @endif
             </ul>
         </div><!--/.nav-collapse -->
     </div>
     <div class="pull-right" style="line-height:50px;">
         <ul class="nav navbar-nav">
-            @if(Session::has('user'))
-                <li style="">
-                    <div class="dropdown pull-right">
-                        <button style="background-color: #333;"  class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img style="padding-right: 10px;" width="40" height="40" src="http://img.mukewang.com/58101c80000162fb01000100-100-100.jpg">
 
-                        </button>
-                        <ul class="dropdown-menu" >
-                            <li><a href="{{url('/loginOut')}}">个人信息</a></li>
-                            <li><a href="{{url('/loginOut')}}">登出</a></li>
-                        </ul>
-                    </div>
-                </li>
-                @else
-            <li><a href="{{url('/login')}}">登陆</a></li>
-            <li><a href="{{url('/regist')}}">注册</a></li>
-               @endif
         </ul>
     </div>
 </nav>

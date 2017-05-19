@@ -21,13 +21,6 @@ class BlogController extends Controller
     public function showArticleList()
     {
           $posts=Post::orderBy('id','desc')->paginate(config('blog.posts_per_page'));
-          $pattern='/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png))\"?.+>/i';
-          foreach ($posts as $v){
-              $a=preg_match($pattern,$v->content,$matches);
-          }
-          //$posts->thumb=$matches[1];
-          dd($posts);
-
           return view('home.articleList',compact('posts'));
     }
 
@@ -47,8 +40,18 @@ class BlogController extends Controller
     public function storeArticle(StoreBlogPost $request)
     {
      $posts=$request->all();
-
-
+     //存个缩略图
+     $pattern='/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png))\"?/i';
+            $a=preg_match($pattern,$posts['content'],$matches);
+            if($a)
+            {
+                $path=explode("\"",$matches[0]);
+                if($path!==false){
+                    $posts['thumb']=$path[1];
+                }
+            }
+            //默认个发布时间
+        $posts['publish_at']=Carbon::now();
      $re=Post::create($posts);
      if($re){
          return redirect('home/article');

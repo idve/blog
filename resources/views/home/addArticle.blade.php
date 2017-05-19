@@ -45,11 +45,6 @@
     <script type="text/javascript" charset="utf-8" src="{{asset('ueditor/lang/zh-cn/zh-cn.js')}}"></script>
     <script>
     </script>
-    <style type="text/css">
-        div{
-            width:100%;
-        }
-    </style>
 
 @stop
 
@@ -94,7 +89,6 @@
             <div class="form-group">
                 <label for="content" >内容：</label>
                 <div>
-                    <h1>完整demo</h1>
                     <script id="editor" type="text/plain" style="width:100%;height:350px;"></script></div>
                     <div id="btns"><script type="text/javascript">var ue = UE.getEditor('editor')</script></div>
             </div>

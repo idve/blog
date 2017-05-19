@@ -2,20 +2,33 @@
 @section('head-title')文章@stop
 @section('style')
  <style>
-    .img-text{
+    .img-img{
         float:left;
+        margin-right: 5px;
+    }
+    .img-img img{
+        width:200px;
     }
 
+    .img-text{
+        float:left;
+        width:81.5%;
+        text-indent: 2em;
+    }
+    .text{
+        text-indent: 2em;
+    }
      .content-edit{
          float:right;
-         margin-right: 5px;
+         margin-top:-20px;
+         margin-right:4px;
      }
     li {
         word-break: break-all;
         word-wrap: break-word;
     }
     .list-group-item{
-
+     padding:5px 5px;
     }
 
  </style>
@@ -36,17 +49,24 @@
         <ul class="list-group ">
             @foreach ($posts as $post)
                 <li class="list-group-item" style="border:none;">
-                    <a href="/home/article/{{ $post->slug }}"><h2><strong>{{ $post->title }}</strong></h2></a>
+                    <h2><a href="/home/article/{{ $post->slug }}"><strong>{{ $post->title }}</strong></a></h2>
                     <em><small>发布于：{{ $post->published_at }}</small></em>
 
                     <div class="content clearfix">
-                        {{ $post->thumb }}
-                        <div class="img-text">{!!str_limit(nl2br(strip_tags($post->content),200))!!}</div>
-                        <br>
-                        @if(Session::has('user'))
-                            <div class="content-edit"><a  href="#">[编辑]</a><a  href="#">&nbsp;[删除]</a></div>
+                        @if($post->thumb)
+                            <div class="img-img">
+                                <img src=" {{ $post->thumb }}">
+                            </div>
+                            <div class="img-text">{!!str_limit(nl2br(strip_tags($post->content)),500)!!}</div>
+                            @else
+                            <div class="text">{!!str_limit(nl2br(strip_tags($post->content)),500)!!}</div>
                         @endif
+
+                        <br>
                     </div>
+                    @if(Session::has('user'))
+                        <div class="content-edit clearfix"><a  href="#">[编辑]</a><a  href="#">&nbsp;[删除]</a></div>
+                    @endif
 
                 </li>
             @endforeach

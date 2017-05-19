@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $dataes=['published_at'];
-    protected $appends=['thumb'];
     protected $fillable=[
-        'title','slug','content',
+        'title','slug','content','thumb',
     ];
-
 
     public function setTitleAttribute($value)
     {
@@ -20,10 +18,6 @@ class Post extends Model
         if(!$this->exits){
             $this->attributes['slug']=str_slug($value);
         }
-    }
-    public function getThumbAttribute()
-    {
-        return $this->thumb;
     }
 
     
