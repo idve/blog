@@ -13,25 +13,24 @@
 
 
 //前台路由
-Route::get('/', function () {
-    return redirect('/home');
-});
-Route::get('home', 'BlogController@index');
+Route::get('/', 'BlogController@index');
 Route::get('/login', 'LoginController@index');
 Route::get('/loginOut', 'LoginController@loginOut');
 Route::post('/login/post', 'LoginController@post');
 Route::get('/regist', 'RegistController@index');
-Route::get('home/article', 'BlogController@showArticleList');
+Route::get('/article', 'BlogController@showArticleList');
 
 //添加文章展示页
-Route::get('home/article/add', 'BlogController@addArticle');
-//添加文章保存
-Route::get('home/article/add', 'BlogController@addArticle');
-Route::post('home/article/store', 'BlogController@storeArticle');
-Route::any('home/uploadkindeditor', 'EditorController@upload');
+Route::get('/article/add', 'BlogController@addArticle');
 
 
+//保存文章
+Route::post('/article/store', 'BlogController@storeArticle');
 
-Route::get('home/article/{slug}', 'BlogController@showArticleDetail');
+//编辑文章
+Route::get('/article/{id}/edit', 'BlogController@editArticle');
+
+
+Route::get('/article/{id}', 'BlogController@showArticleDetail');
 
 //后台路由

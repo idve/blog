@@ -12,7 +12,7 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" >
                 <li class="active"><a href="{{url('/')}}">首页</a></li>
-                <li><a href="{{url('/home/article/')}}">文章</a></li>
+                <li><a href="{{url('/article/')}}">文章</a></li>
                 <li><a href="#contact">相册</a></li>
                 <li><a href="#contact">音乐</a></li>
                 <li><a href="#contact">联系我</a></li>

@@ -7,6 +7,7 @@ use App\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Psy\Output\PassthruPager;
 
 class BlogController extends Controller
 {
@@ -20,13 +21,13 @@ class BlogController extends Controller
 
     public function showArticleList()
     {
-          $posts=Post::orderBy('id','desc')->paginate(config('blog.posts_per_page'));
+          $posts=Post::where('status','=',1)->orderBy('id','desc')->paginate(config('blog.posts_per_page'));
           return view('home.articleList',compact('posts'));
     }
 
-    public function showArticleDetail($slug)
+    public function showArticleDetail($id)
     {
-        $detail=Post::whereSlug($slug)->firstOrFail();
+        $detail=Post::findOrFail($id);
 
         return view('home.articleDetail')->withPosts($detail);
 
@@ -39,6 +40,7 @@ class BlogController extends Controller
 
     public function storeArticle(StoreBlogPost $request)
     {
+
      $posts=$request->all();
      //存个缩略图
      $pattern='/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png))\"?/i';
@@ -54,10 +56,21 @@ class BlogController extends Controller
         $posts['publish_at']=Carbon::now();
      $re=Post::create($posts);
      if($re){
-         return redirect('home/article');
+         return redirect('/article');
      }
+
+
+
     }
 
+    public function editArticle($id)
+    {
+
+       $article=Post::findOrFail((int)$id);
+
+        return view('home.editArticle',$article);
+
+}
 
     
 }

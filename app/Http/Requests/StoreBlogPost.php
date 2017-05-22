@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreBlogPost extends FormRequest
@@ -36,5 +37,19 @@ class StoreBlogPost extends FormRequest
             'content.required'=>'内容不能为空',
         ];
     }
+
+    public function postFilleData()
+    {
+        $published_at=new Carbon(
+            $this->publish_date.''.$this->publish_time
+        );
+        return [
+            'title'=>$this->title,
+            'content'=>$this->content,
+
+        ];
+
+        
+     }
 
 }

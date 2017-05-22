@@ -64,8 +64,10 @@
                 </ul>
             </div>
         @endif
-        <form class="form-horizontal" action="{{URL('home/article/store')}}" method="post">
-            {{csrf_field()}}
+        <form class="form-horizontal" action="{{URL('/article/store')}}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="user_id" value="{{Session::get('user')->id }}">
+
                 <div class="form-group ">
                     <span class="heading" >添加文章</span>
                 </div>
