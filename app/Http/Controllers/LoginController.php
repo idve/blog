@@ -39,7 +39,7 @@ class LoginController extends Controller
     public function loginOut()
     {
         Session::forget('user');
-        return redirect('/home');
+        return redirect('/');
 
      }
 

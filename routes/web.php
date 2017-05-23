@@ -24,8 +24,12 @@ Route::get('/article', 'BlogController@showArticleList');
 Route::get('/article/add', 'BlogController@addArticle');
 
 
+//保存分类
+Route::post('/cate/store','BlogController@storeCate');
 //保存文章
 Route::post('/article/store', 'BlogController@storeArticle');
+//修改文章
+Route::put('/article/store', 'BlogController@storeArticle');
 
 //编辑文章
 Route::get('/article/{id}/edit', 'BlogController@editArticle');

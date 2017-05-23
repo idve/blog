@@ -46,7 +46,6 @@ class StoreBlogPost extends FormRequest
         return [
             'title'=>$this->title,
             'content'=>$this->content,
-
         ];
 
         

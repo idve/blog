@@ -8,7 +8,7 @@ class Post extends Model
 {
     protected $dataes=['published_at'];
     protected $fillable=[
-        'title','slug','content','thumb','user_id'
+        'title','slug','content','thumb','user_id','cid'
     ];
 
     public function setTitleAttribute($value)
@@ -19,6 +19,12 @@ class Post extends Model
             $this->attributes['slug']=str_slug($value);
         }
     }
+
+    public function cate()
+    {
+        return $this->hasOne('App\Cate','id','cid');
+    }
+    
 
     
 }

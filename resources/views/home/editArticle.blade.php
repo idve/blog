@@ -65,12 +65,13 @@
                 </ul>
             </div>
         @endif
-        <form class="form-horizontal" action="{{URL('/article/store')}}" method="post">
+        <form class="form-horizontal" action="{{url('/article/store')}}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="user_id" value="{{Session::get('user')->id }}">
-
+            <input type="hidden" name="user_id" value="{{Session::get('user')->id}}">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="id" value="{{$id}}">
                 <div class="form-group ">
-                    <span class="heading" >添加文章</span>
+                    <span class="heading" >修改文章</span>
                 </div>
 
             <div class="form-group">
@@ -81,7 +82,7 @@
             <div class="form-group">
                 <label >分类：</label>
                 <span class="text"><botton class="btn" onclick="">创建分类</botton></span>
-                <select name="cate" class="form-control">
+                <select name="cid" class="form-control">
                     <option value="1">laravel学习</option>
                     <option value="2">诗情画意</option>
                     <option value="3">asff</option>
@@ -101,7 +102,7 @@
                           </script></div>
             </div>
             <div class="form-group">
-                <button class="btn btn-large form-control btn-block btn-primary" type="submit">发&nbsp;&nbsp;&nbsp;&nbsp;布</button>
+                <button class="btn btn-large form-control btn-block btn-primary" type="submit">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
             </div>
         </form>
     </div>
