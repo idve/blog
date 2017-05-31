@@ -17,18 +17,18 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         //dd(Session::all());
-      return view('home.index');
+        return view('home.index');
     }
 
     public function showArticleList()
     {
-          $posts=Post::where('status','=',1)->orderBy('id','desc')->paginate(config('blog.posts_per_page'));
-          return view('home.articleList',compact('posts'));
+        $posts = Post::where('status', '=', 1)->orderBy('id', 'desc')->paginate(config('blog.posts_per_page'));
+        return view('home.articleList', compact('posts'));
     }
 
     public function showArticleDetail($id)
     {
-        $detail=Post::where('status','=',1)->findOrFail($id);
+        $detail = Post::where('status', '=', 1)->findOrFail($id);
 
         return view('home.articleDetail')->withPosts($detail);
 
@@ -36,67 +36,66 @@ class BlogController extends Controller
 
     public function addArticle()
     {
-        $cates=Cate::all();
-        return view('home.addArticle',compact('cates'));
+        $cates = Cate::all();
+        return view('home.addArticle', compact('cates'));
     }
 
     public function storeArticle(StoreBlogPost $request)
     {
-     $posts=$request->all();
+        $posts = $request->all();
         //存个缩略图
-        $pattern='/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png))\"?/i';
-        $a=preg_match($pattern,$posts['content'],$matches);
-        if($a)
-        {
-            $path=explode("\"",$matches[0]);
-            if($path!==false){
-                $posts['thumb']=$path[1];
+        $pattern = '/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png))\"?/i';
+        $a = preg_match($pattern, $posts['content'], $matches);
+        if ($a) {
+            $path = explode("\"", $matches[0]);
+            if ($path !== false) {
+                $posts['thumb'] = $path[1];
             }
         }
         //默认个发布时间
-        $posts['published_at']=Carbon::now();
-     if($request->method()==='POST'){
-         //新增
-         $re=Post::create($posts);
-     }elseif ($request->method()==='PUT'){
-         //更新
-         $posts=array_only($posts, ['title', 'content','slug','published_at','thumb','status','user_id','cid']);
-         $re=Post::where('id','=',$request->id)->update($posts);
-     }
+        $posts['published_at'] = Carbon::now();
+        if ($request->method() === 'POST') {
+            //新增
+            $re = Post::create($posts);
+        } elseif ($request->method() === 'PUT') {
+            //更新
+            $posts = array_only($posts, ['title', 'content', 'slug', 'published_at', 'thumb', 'status', 'user_id', 'cid']);
+            $re = Post::where('id', '=', $request->id)->update($posts);
+        }
 
-     if($re){
-         return redirect('/article');
-     }
-
-
-
+        if ($re) {
+            return redirect('/article');
+        }
     }
 
     public function editArticle($id)
     {
         //展示没删除的
-       $article=Post::where('status','=',1)->findOrFail((int)$id);
+        $article = Post::where('status', '=', 1)->findOrFail((int)$id);
+        $article['cates']=Cate::all();
+        return view('home.editArticle', $article);
+    }
 
-        return view('home.editArticle',$article);
-}
-    public function deleteArticle()
+    public function delArticle($id)
     {
-        
- }
+        $article = Post::where('status', '=', 1)->findOrFail((int)$id);
+        $article->status=0;
+        $article->save();
+       return redirect()->back();
+    }
 
     public function storeCate(Request $request)
     {
         $cname = $request->input('cname');
-        $re=Cate::create(compact('cname'));
-       if($re)
-       {
-           //添加成功
-           $data['code']=200;
-           $data['data']=$re;
-           return $data;
-       }else{
-           $data['code']=100;
-           return $data;
-       }
+        $re = Cate::create(compact('cname'));
+        if ($re) {
+            //添加成功
+            $data['code'] = 200;
+            $data['data'] = $re;
+            return $data;
+        } else {
+            $data['code'] = 100;
+            return $data;
+        }
     }
 }
