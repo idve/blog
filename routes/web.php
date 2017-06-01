@@ -33,6 +33,8 @@ Route::put('/article/store', 'BlogController@storeArticle');
 
 //编辑文章
 Route::get('/article/{id}/edit', 'BlogController@editArticle');
+//删除文章
+Route::get('/article/{id}/delete', 'BlogController@delArticle');
 
 
 Route::get('/article/{id}', 'BlogController@showArticleDetail');

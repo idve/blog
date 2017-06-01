@@ -70,22 +70,14 @@
                             $("#msg-addCate").text('添加成功');
                             $("#cate-name").attr('value');
                             $("#cid").prepend('<option value="'+data.data.id+'" selected="selected">'+data.data.cname+'</option>');
-
                         }else{
                             $("#msg-addCate").text('添加失败');
                         }
-
-
-
                     }
                 });
-
-
-
             });
         });
     </script>
-
 @stop
 
 
@@ -120,6 +112,7 @@
                 <label >分类：</label>
                 <span class="text"><botton class="btn" data-toggle="modal" data-target="#createCate">创建分类</botton></span>
                 <select name="cid" id="cid" class="form-control">
+                    <option value="0" >未分类</option>
                     @foreach($cates as $cate)
                     <option value="{{$cate->id}}">{{$cate->cname}}</option>
                     @endforeach
@@ -130,6 +123,11 @@
                 <div>
                     <script id="editor" type="text/plain" style="width:100%;height:350px;"></script></div>
                     <div id="btns"><script type="text/javascript">var ue = UE.getEditor('editor')</script></div>
+            </div>
+            <div class="form-group">
+                <label for="">是否重点推荐</label>
+                <input type="radio" name="position" value="1">是
+                <input type="radio" name="position" value="0" checked>否
             </div>
             <div class="form-group">
                 <button class="btn btn-large form-control btn-block btn-primary" type="submit">发&nbsp;&nbsp;&nbsp;&nbsp;布</button>
@@ -165,5 +163,4 @@
             </div>
         </div>
         <div class="footer">@include('layouts.home_footer')</div>
-
 @stop

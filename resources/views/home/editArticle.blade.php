@@ -34,6 +34,18 @@
         font-size:25px;
         font-weight: 600;
     }
+
+    .msg-success{
+        text-align: center;
+        background-color: #eeffcb;
+        height:40px;
+    }
+    .success{
+        font-size:14px;
+        color:#449d44;
+        padding:15px 0;
+        line-height: 40px;
+    }
 </style>
 
 
@@ -44,7 +56,28 @@
     <script type="text/javascript" charset="utf-8" src="{{asset('ueditor/ueditor.all.min.js')}}"> </script>
     <script type="text/javascript" charset="utf-8" src="{{asset('ueditor/lang/zh-cn/zh-cn.js')}}"></script>
     <script>
-
+        $(function(){
+            $("#input-cate").click(function(){
+                $.ajax({
+                    type: "POST",
+                    url:"{{url('/cate/store')}}",
+                    data:$('#cateform').serialize(),// 你的formid
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        if(data.code==200){
+                            $("#msg-addCate").addClass("success");
+                            $("#msg-addCate").parent().addClass("msg-success");
+                            $("#msg-addCate").text('添加成功');
+                            $("#cate-name").attr('value');
+                            $("#cid").prepend('<option value="'+data.data.id+'" selected="selected">'+data.data.cname+'</option>');
+                        }else{
+                            $("#msg-addCate").text('添加失败');
+                        }
+                    }
+                });
+            });
+        });
     </script>
 
 @stop
@@ -81,13 +114,16 @@
 
             <div class="form-group">
                 <label >分类：</label>
-                <span class="text"><botton class="btn" onclick="">创建分类</botton></span>
-                <select name="cid" class="form-control">
-                    <option value="1">laravel学习</option>
-                    <option value="2">诗情画意</option>
-                    <option value="3">asff</option>
-                    <option value="4">777</option>
-                    <option value="5">oooi</option>
+                <span class="text"><botton class="btn" data-toggle="modal" data-target="#createCate">创建分类</botton></span>
+                <select name="cid" id="cid" class="form-control">
+                    <option value="0" >未分类</option>
+                    @foreach($cates as $cate)
+                        @if($cate->id==$cid)
+                        <option value="{{$cate->id}}" selected="selected">{{$cate->cname}}</option>
+                        @else
+                            <option value="{{$cate->id}}" >{{$cate->cname}}</option>
+                        @endif
+                    @endforeach
                 </select>
             </div>
             <div class="form-group">
@@ -95,11 +131,20 @@
                 <div>
                     <script id="editor" type="text/plain" style="width:100%;height:350px;"></script></div>
                     <div id="btns"><script type="text/javascript">var ue = UE.getEditor('editor');
-
                             ue.ready(function(){
                                 ue.setContent('{!!$content!!}')
                             });
                           </script></div>
+            </div>
+            <div class="form-group">
+                <label for="">是否重点推荐:</label>
+                @if($position==1)
+                <input type="radio" name="position" value="1" checked>是
+                <input type="radio" name="position" value="0" >否
+                    @else
+                    <input type="radio" name="position" value="1" >是
+                    <input type="radio" name="position" value="0" checked >否
+                    @endif
             </div>
             <div class="form-group">
                 <button class="btn btn-large form-control btn-block btn-primary" type="submit">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
@@ -107,9 +152,33 @@
         </form>
     </div>
     </div>
-
 </div>
 
+        <div class="modal fade" id="createCate" tabindex="-1" role="dialog" aria-labelledby="ecreateCateLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="ecreateCateLabel">创建分类</h4>
+                    </div>
+                    <div class=""><span id="msg-addCate" class=""></span></div>
+                    <div class="modal-body">
+                        <form id="cateform">
+                            <div class="form-group">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <label for="recipient-name" class="control-label">分类名称：</label>
+                                <input type="text" class="form-control" name="cname" id="cate-name">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="input-cate"  class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 <div class="footer">@include('layouts.home_footer')</div>
 @stop

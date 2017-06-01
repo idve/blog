@@ -1,32 +1,57 @@
 @extends('layouts.home_layout')
         @section('head-title'){{config('blog.title')}}@stop
 @section('main')
+
         <!-- header -->
 <div class="header">@include('layouts.home_header')</div>
 <div class="main">
     <div class="row clearfix">
         <div class="col-md-4 column">
             <div class="page-header">
-                <h1>推荐文章<small>&nbsp;&nbsp;列表</small></h1>
+                <h1>推荐文章<small>&nbsp;&nbsp;推荐</small></h1>
             </div>
-            <div class="col-md-8 ">
+            <div >
                 <div class="blog-post">
-                    <h2>laravel是个非常强大的框架</h2>
-                    <h4>发布：<a href="#">曾刚</a>&nbsp;&nbsp;on 24th January 2015 </h4>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                    </p>
-                    <a href="#" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
+
+                    <div id="demo" style="overflow:hidden;height:250px;">
+
+                        <div id="demo1">
+                            <h2>@if(isset($data['position'])){{$data['position']->title}}@endif</h2>
+                            <h4>发布：<a href="">@if(Session::has('user')){{Session::get('user')->username}}@endif</a>&nbsp;&nbsp;@if(isset($data['position']))on {{$data['position']->published_at}}@endif</h4>
+                            @if(isset($data['position'])){!!$data['position']->content!!}@else无数据@endif</div>
+                        <div id="demo2"></div>
+                    </div>
+                    <script>
+                        var speed=50;
+                        demo2.innerHTML=demo1.innerHTML;
+                        function Marquee(){
+                            if(demo2.offsetTop-demo.scrollTop<=0)
+                                demo.scrollTop-=demo1.offsetHeight;
+                            else{
+                                demo.scrollTop++
+                            }
+                        }
+                        var MyMar=setInterval(Marquee,speed);
+                        demo.onmouseover=function() {clearInterval(MyMar)};
+                        demo.onmouseout=function() {MyMar=setInterval(Marquee,speed)};
+                    </script>
+                    <a href="@if(isset($data['position'])){{url("/article/{$data['position']}->id")}}@endif" style="margin-top:5px;" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
                 </div>
                 <br>
 
             </div>
+            <div></div>
+            <script>
+
+
+            </script>
+
+
+
         </div>
         <div class="col-md-4 column">
             <div class="page-header">
-                <h1>相册<small>&nbsp;&nbsp;列表</small></h1>
+                <h1>相册<small>&nbsp;&nbsp;推荐</small></h1>
             </div>
             <div class="carousel slide" id="carousel-160617">
                 <ol class="carousel-indicators">
@@ -76,11 +101,9 @@
         </div>
         <div class="col-md-4 column">
             <div class="page-header">
-                <h1>音乐<small>&nbsp;&nbsp;列表</small></h1>
+                <h1>音乐<small>&nbsp;&nbsp;推荐</small></h1>
             </div>
             <div class="row">
-
-
             </div>
 
 
@@ -89,6 +112,10 @@
     </div>
 
     <div class="row">
+        <div class="page-header">
+            <h1>热点文章<small>&nbsp;&nbsp;推荐</small></h1>
+        </div>
+
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
 
             <div class="tm-content-box">
@@ -102,40 +129,8 @@
 
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
 
-            <div class="tm-content-box">
-                <img src="{{asset('images/2.jpg')}}" alt="Image" class="tm-margin-b-20 img-fluid">
-                <h4 class="tm-margin-b-20 tm-gold-text">Lorem ipsum dolor #2</h4>
-                <p class="tm-margin-b-20">Aenean cursus tellus mauris, quis
-                    consequat mauris dapibus id. Donec
-                    scelerisque porttitor pharetra</p>
-                <a href="#" class="tm-btn text-uppercase">Read More</a>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
 
-            <div class="tm-content-box">
-                <img src="{{asset('images/2.jpg')}}" alt="Image" class="tm-margin-b-20 img-fluid">
-                <h4 class="tm-margin-b-20 tm-gold-text">Lorem ipsum dolor #2</h4>
-                <p class="tm-margin-b-20">Aenean cursus tellus mauris, quis
-                    consequat mauris dapibus id. Donec
-                    scelerisque porttitor pharetra</p>
-                <a href="#" class="tm-btn text-uppercase">Read More</a>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-
-            <div class="tm-content-box">
-                <img src="{{asset('images/2.jpg')}}" alt="Image" class="tm-margin-b-20 img-fluid">
-                <h4 class="tm-margin-b-20 tm-gold-text">Lorem ipsum dolor #2</h4>
-                <p class="tm-margin-b-20">Aenean cursus tellus mauris, quis
-                    consequat mauris dapibus id. Donec
-                    scelerisque porttitor pharetra</p>
-                <a href="#" class="tm-btn text-uppercase">Read More</a>
-            </div>
-        </div>
 
     </div>
     <div>

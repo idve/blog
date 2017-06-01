@@ -14,7 +14,7 @@
 }
 
 .column{
-    margin-bottom: 40px;
+    margin-bottom: 10px;
 }
 
 body {
@@ -74,8 +74,8 @@ a:focus {
 .tm-gold-text { color: #cc9900; }
 
 .tm-section {
-    padding-top: 80px;
-    padding-bottom: 100px;
+    padding-top: 30px;
+    padding-bottom: 25px;
 }
 
 

@@ -17,7 +17,19 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         //dd(Session::all());
-        return view('home.index');
+        $position=Post::where('status','=','1')->where('cid','=','1')->orderBy('id','desc')
+            ->first();//获取推荐文章
+
+        $data=array();
+
+        if($position){
+            $data['position']=$position;
+            return view('home.index', compact('data'));
+        }else{
+            return view('home.index');
+        }
+
+
     }
 
     public function showArticleList()
@@ -51,7 +63,10 @@ class BlogController extends Controller
             if ($path !== false) {
                 $posts['thumb'] = $path[1];
             }
+        }else{
+            $posts['thumb'] =asset('images/zg.jpg');
         }
+        $posts['published_at'] = Carbon::now();
         //默认个发布时间
         $posts['published_at'] = Carbon::now();
         if ($request->method() === 'POST') {
@@ -59,7 +74,7 @@ class BlogController extends Controller
             $re = Post::create($posts);
         } elseif ($request->method() === 'PUT') {
             //更新
-            $posts = array_only($posts, ['title', 'content', 'slug', 'published_at', 'thumb', 'status', 'user_id', 'cid']);
+            $posts = array_only($posts, ['title', 'content', 'slug', 'published_at', 'thumb', 'status', 'user_id', 'cid','position']);
             $re = Post::where('id', '=', $request->id)->update($posts);
         }
 

@@ -8,7 +8,7 @@ class Post extends Model
 {
     protected $dataes=['published_at'];
     protected $fillable=[
-        'title','slug','content','thumb','user_id','cid'
+        'title','slug','content','thumb','user_id','cid','position',
     ];
 
     public function setTitleAttribute($value)
@@ -16,7 +16,20 @@ class Post extends Model
         //当给title设置值时，slug
         $this->attributes['title']=$value;
         if(!$this->exits){
-            $this->attributes['slug']=str_slug($value);
+         //判断是否含有中文
+            if (preg_match("/([\x81-\xfe][\x40-\xfe])/", $this->attributes['title'], $match)) {
+               //把汉字转为拼音
+
+
+
+
+
+            } else {
+                $this->attributes['slug']=str_slug($value);
+            }
+
+
+
         }
     }
 
