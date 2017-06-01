@@ -7,7 +7,7 @@
         margin-right: 5px;
     }
     .img-img img{
-        width:200px;
+        height:150px;
     }
 
     .img-text{
@@ -33,6 +33,40 @@
 .content{
     padding:10px 0;
 }
+     .article-search
+     {
+         float:right;
+         width:400px;
+         padding:5px;
+         text-align: right;
+     }
+    .article-search select{
+        padding-left:5px;
+        height:30px;
+        font-size: 14px;
+        line-height: 30px;
+        border-radius: 5px;
+        background-color: transparent;
+        border:1px solid #0f74a8;
+    }
+
+    .article-search a{
+              display: inline-block;
+        padding:5px 0;
+              width:150px;
+               background-color: #ddb1ff;
+              text-align: center;
+              font-size:18px;
+              margin: 0 25px;
+              color:#5a57ff;
+             font-weight:500;
+             border-radius: 5px;
+    }
+    .article-search a:hover {
+     background-color:rgba(221,177,255,0.7) ;
+
+
+    }
  </style>
 @section('main')
         <!-- header -->
@@ -40,19 +74,30 @@
 <div class="main">
 
     <div class="container">
-        <h1>文章<small>&nbsp;&nbsp;列表</small></h1>
-
+        <div class="article-search">
+            @if(Session::has('user'))
+                <a  href="{{url('/article/add')}}">添加文章</a>
+            @endif
+            <select >
+                <option value="-1" >所有文章</option>
+                <option value="0" >未分类</option>
+                @foreach(\App\Cate::all() as $cate)
+                    <option value="{{$cate->id}}">{{$cate->cname}}</option>
+                @endforeach
+            </select>
+        </div>
+        <h1>文章<small>&nbsp;&nbsp;列表</small>
+        </h1>
         <h5>Page {{ $posts->currentPage() }} of {{ $posts->lastPage() }}</h5>
-        @if(Session::has('user'))
-            <div class="" style="">
-            <a href="{{url('/article/add')}}"><span style=" font-size:24px;height:60px;width:40%;margin:0px auto;" type="button" class="btn btn-success btn-lg btn-block active">添加文章</span></a>
-            </div>
-        @endif
+
+
         <ul class="list-group ">
             @foreach ($posts as $post)
                 <li class="list-group-item" style="border:none;">
                     <h2><a href="/article/{{ $post->id }}"><strong>{{ $post->title }}</strong></a></h2>
-                    <em><small>发布于：{{ $post->published_at }}</small></em>
+                    <em><small style="color:#88ff59">类别：<span style="color: #ffbe1e">{{ $post->cate['cname'] }}</span></small>
+                        <small style="float:right;color:#ff87f5">发布于：{{ $post->published_at }}</small>
+                    </em>
 
                     <div class="content clearfix">
                         @if($post->thumb)
@@ -67,8 +112,7 @@
                         <br>
                     </div>
                     @if(Session::has('user'))
-
-                        <div class="content-edit clearfix"><a  href="{{url('/article/'.$post->id.'/edit')}}">[编辑]</a><a  href="#">&nbsp;[删除]</a></div>
+                        <div class="content-edit clearfix"><a  href="{{url('/article/'.$post->id.'/edit')}}">[编辑]</a><a  href="{{url('/article/'.$post->id.'/delete')}}">&nbsp;[删除]</a></div>
                     @endif
                 </li>
             @endforeach
