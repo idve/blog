@@ -42,6 +42,7 @@ class BlogController extends Controller
     {
         $detail = Post::where('status', '=', 1)->findOrFail($id);
 
+
         return view('home.articleDetail')->withPosts($detail);
 
     }
