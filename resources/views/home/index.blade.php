@@ -115,43 +115,21 @@
         <div class="page-header">
             <h1>热点文章<small>&nbsp;&nbsp;推荐</small></h1>
         </div>
-
+      @foreach($data['hots'] as $hot)
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
-
-            <div class="tm-content-box">
-                <img src="{{asset('images/1.jpg')}}" alt="Image" class="tm-margin-b-20 img-fluid">
-                <h4 class="tm-margin-b-20 tm-gold-text">Lorem ipsum dolor #1</h4>
-                <p class="tm-margin-b-20">Aenean cursus tellus mauris, quis
-                    consequat mauris dapibus id. Donec
-                    scelerisque porttitor pharetra</p>
-                <a href="#" class="tm-btn text-uppercase">Detail</a>
+            <div class="tm-content-box zg-box">
+                <img src="{{$hot->thumb}}" alt="Image" class="tm-margin-b-20 img-fluid">
+                <h4 class="tm-margin-b-20 tm-gold-text">{{$hot->title}}</h4>
+                <p class="tm-margin-b-20">{!!str_limit(nl2br(strip_tags($hot->content)),150)!!}</p>
+                <a href="/article/{{ $hot->id }}" class="zg-btn tm-btn text-uppercase">查看</a>
             </div>
 
         </div>
-
-
-
+        @endforeach
 
     </div>
     <div>
         <nav class="navbar" style="text-align: center">
-            <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">«</span>
-                    </a>
-                </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">»</span>
-                    </a>
-                </li>
-            </ul>
         </nav>
     </div>
 </div>
