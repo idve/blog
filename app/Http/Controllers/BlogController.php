@@ -22,14 +22,12 @@ class BlogController extends Controller
 
         $data=array();
 
-        if($position){
             $data['position']=$position;
+
+
+
+
             return view('home.index', compact('data'));
-        }else{
-            return view('home.index');
-        }
-
-
     }
 
     public function showArticleList()
