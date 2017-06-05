@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cate;
+use App\Hot;
 use App\Http\Requests\StoreBlogPost;
 use App\Post;
 use Carbon\Carbon;
@@ -21,12 +22,17 @@ class BlogController extends Controller
             ->first();//获取推荐文章
 
         $data=array();
-
+            //调用诗歌
+        if($position){
             $data['position']=$position;
-
-
-
-
+        }
+            //调用热点文章
+        $hots = Post::whereHas('Hot', function ($query) {
+            $query->orderBy('clicks','desc');
+        })->limit(4)->get();
+        if($hots){
+            $data['hots']=$hots;
+        }
             return view('home.index', compact('data'));
     }
 
@@ -39,10 +45,23 @@ class BlogController extends Controller
     public function showArticleDetail($id)
     {
         $detail = Post::where('status', '=', 1)->findOrFail($id);
-
-
+        //记录热点
+        $time=Carbon::now();
+        if($hid=$detail->hid){
+            $hots=Hot::where('status','=','1')->find($hid);
+            if($hots->date<Carbon::today()){
+                $hots->clicks=0;
+            }else{
+                $hots->clicks+=1;
+            }
+        }else{
+            $hots=new Hot();
+            $hots->clicks+=1;
+        }
+           $hots->date=$time;
+           $hots->nid=$detail->id;
+        $hots->save();
         return view('home.articleDetail')->withPosts($detail);
-
     }
 
     public function addArticle()

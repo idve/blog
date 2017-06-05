@@ -8,7 +8,7 @@ class Post extends Model
 {
     protected $dataes=['published_at'];
     protected $fillable=[
-        'title','slug','content','thumb','user_id','cid','position',
+        'title','slug','content','thumb','user_id','cid','position','hid',
     ];
 
     public function setTitleAttribute($value)
@@ -22,13 +22,9 @@ class Post extends Model
 
 
 
-
-
             } else {
                 $this->attributes['slug']=str_slug($value);
             }
-
-
 
         }
     }

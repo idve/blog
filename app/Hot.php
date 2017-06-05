@@ -8,6 +8,7 @@ class Hot extends Model
 {
     //
      protected  $fillable=['id','nid','date','clicks','staus'];
+     public $timestamps=false;
 
     public function post()
     {
