@@ -20,6 +20,8 @@ Route::post('/login/post', 'LoginController@post');
 Route::get('/regist', 'RegistController@index');
 Route::get('/article', 'BlogController@showArticleList');
 
+
+
 //添加文章展示页
 Route::get('/article/add', 'BlogController@addArticle');
 
@@ -36,7 +38,9 @@ Route::get('/article/{id}/edit', 'BlogController@editArticle');
 //删除文章
 Route::get('/article/{id}/delete', 'BlogController@delArticle');
 
-
 Route::get('/article/{id}', 'BlogController@showArticleDetail');
+
+//相册路由
+Route::get('/photo', 'PhotoController@index');
 
 //后台路由

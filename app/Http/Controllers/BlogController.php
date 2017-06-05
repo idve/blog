@@ -27,10 +27,10 @@ class BlogController extends Controller
             $data['position']=$position;
         }
             //调用热点文章
-        $hots = Post::whereHas('Hot', function ($query) {
-            $query->orderBy('clicks','desc');
+       $hots = Post::with('Hot')->whereHas('Hot', function ($query) {
+            $query->where('date','>',Carbon::today());
         })->limit(4)->get();
-        //dd($hots);
+
         if($hots){
             $data['hots']=$hots;
         }

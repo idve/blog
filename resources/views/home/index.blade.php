@@ -13,16 +13,16 @@
             <div >
                 <div class="blog-post">
 
-                    <div id="demo" style="overflow:hidden;height:250px;">
-
+                    <div id="demo" style="overflow:hidden;height:300px;">
                         <div id="demo1">
                             <h2>@if(isset($data['position'])){{$data['position']->title}}@endif</h2>
-                            <h4>发布：<a href="">@if(Session::has('user')){{Session::get('user')->username}}@endif</a>&nbsp;&nbsp;@if(isset($data['position']))on {{$data['position']->published_at}}@endif</h4>
-                            @if(isset($data['position'])){!!$data['position']->content!!}@else无数据@endif</div>
+                            <br>
+                            @if(isset($data['position'])){!!$data['position']->content!!}@else无数据@endif
+                        </div>
                         <div id="demo2"></div>
                     </div>
                     <script>
-                        var speed=50;
+                        var speed=70;
                         demo2.innerHTML=demo1.innerHTML;
                         function Marquee(){
                             if(demo2.offsetTop-demo.scrollTop<=0)
@@ -32,10 +32,10 @@
                             }
                         }
                         var MyMar=setInterval(Marquee,speed);
-                        demo.onmouseover=function() {clearInterval(MyMar)};
-                        demo.onmouseout=function() {MyMar=setInterval(Marquee,speed)};
+                        demo.onmouseover=function() { clearInterval(MyMar)};
+                        demo.onmouseout=function() { MyMar=setInterval(Marquee,speed)};
                     </script>
-                    <a href="@if(isset($data['position'])){{url("/article/{$data['position']}->id")}}@endif" style="margin-top:5px;" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
+                    <a href="@if(isset($data['position'])){{url("/article/{$data['position']->id}")}}@endif" style="margin-top:5px;" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
                 </div>
                 <br>
 
@@ -120,7 +120,7 @@
             <div class="tm-content-box zg-box">
                 <img src="{{$hot->thumb}}" alt="Image" class="tm-margin-b-20 img-fluid">
                 <h4 class="tm-margin-b-20 tm-gold-text">{{$hot->title}}</h4>
-                <p class="tm-margin-b-20">{!!str_limit(nl2br(strip_tags($hot->content)),150)!!}</p>
+                <p class="tm-margin-b-20">{!!str_limit(strip_tags($hot->content),150)!!}</p>
                 <a href="/article/{{ $hot->id }}" class="zg-btn tm-btn text-uppercase">查看</a>
             </div>
 
