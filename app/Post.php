@@ -35,7 +35,7 @@ class Post extends Model
     }
     public function hot()
     {
-        return $this->hasOne('App\Hot','id','cid');
+        return $this->hasOne('App\Hot','id','hid');
     }
     
 

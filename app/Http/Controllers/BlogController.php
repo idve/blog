@@ -30,6 +30,7 @@ class BlogController extends Controller
         $hots = Post::whereHas('Hot', function ($query) {
             $query->orderBy('clicks','desc');
         })->limit(4)->get();
+        //dd($hots);
         if($hots){
             $data['hots']=$hots;
         }
@@ -58,9 +59,13 @@ class BlogController extends Controller
             $hots=new Hot();
             $hots->clicks+=1;
         }
+
            $hots->date=$time;
            $hots->nid=$detail->id;
-        $hots->save();
+           $hots->save();
+        $detail->hid=$hots->id;
+        $detail->save();
+        $detail->content= ($detail->content);
         return view('home.articleDetail')->withPosts($detail);
     }
 
@@ -89,9 +94,11 @@ class BlogController extends Controller
         $posts['published_at'] = Carbon::now();
         if ($request->method() === 'POST') {
             //新增
+            $posts['content']=($posts['content']);
             $re = Post::create($posts);
         } elseif ($request->method() === 'PUT') {
             //更新
+            $posts['content']=($posts['content']);
             $posts = array_only($posts, ['title', 'content', 'slug', 'published_at', 'thumb', 'status', 'user_id', 'cid','position']);
             $re = Post::where('id', '=', $request->id)->update($posts);
         }

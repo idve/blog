@@ -7,12 +7,11 @@
         margin-right: 5px;
     }
     .img-img img{
+        float:left;
         height:150px;
     }
 
     .img-text{
-        float:left;
-        width:81.5%;
         text-indent: 2em;
     }
     .text{
@@ -104,9 +103,9 @@
                             <div class="img-img">
                                 <img src=" {{ $post->thumb }}">
                             </div>
-                            <div class="img-text">{!!str_limit(nl2br(strip_tags($post->content)),500)!!}</div>
+                            <div class="img-text">{{str_limit(nl2br(strip_tags($post->content)),500)}}</div>
                             @else
-                            <div class="text">{!!str_limit(nl2br(strip_tags($post->content)),500)!!}</div>
+                            <div class="text">{{str_limit(nl2br(strip_tags($post->content)),500)}}</div>
                         @endif
 
                         <br>
