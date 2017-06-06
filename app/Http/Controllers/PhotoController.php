@@ -14,4 +14,10 @@ class PhotoController extends Controller
 
         return view('home.photo_index');
     }
+
+
+    public function addPhoto()
+    {
+        return view('home.addPhoto');
+    }
 }

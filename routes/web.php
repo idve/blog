@@ -42,5 +42,6 @@ Route::get('/article/{id}', 'BlogController@showArticleDetail');
 
 //相册路由
 Route::get('/photo', 'PhotoController@index');
+Route::get('/photo/add', 'PhotoController@index');
 
 //后台路由
