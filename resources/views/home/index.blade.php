@@ -35,17 +35,10 @@
                         demo.onmouseover=function() { clearInterval(MyMar)};
                         demo.onmouseout=function() { MyMar=setInterval(Marquee,speed)};
                     </script>
-                    <a href="@if(isset($data['position'])){{url("/article/{$data['position']->id}")}}@endif" style="margin-top:5px;" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
+                    <a href="@if(isset($data['position'])){{url("/article/{$data['position']->id}")}}@endif" style="margin-top:5px;" class="btn btn-default btn-lg ">查看<i class="fa fa-angle-right"></i></a>
                 </div>
                 <br>
-
             </div>
-            <div></div>
-            <script>
-
-
-            </script>
-
 
 
         </div>
@@ -111,7 +104,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="padding-bottom: 15px;">
         <div class="page-header">
             <h1>热点文章<small>&nbsp;&nbsp;推荐</small></h1>
         </div>
@@ -127,10 +120,6 @@
         </div>
         @endforeach
 
-    </div>
-    <div>
-        <nav class="navbar" style="text-align: center">
-        </nav>
     </div>
 </div>
 
