@@ -296,3 +296,13 @@ li {
 .zg-cate-photo:hover{
     background-color:rgba(84,6,86,0.7) ;
 }
+.zg-up input,.zg-up label{
+    padding:5px 3px;
+    border: none;
+    font-size: 14px;
+}
+
+
+.zg-up-foot{
+    border:none;
+}
