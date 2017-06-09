@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Photo;
 use App\Post;
 use Carbon\Carbon;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -12,9 +13,9 @@ use Illuminate\Support\Facades\Storage;
 class PhotoController extends Controller
 {
     //
-    public function index()
+    public function index($cid=0)
     {
-        $photo=Photo::where('status','=',1)->where('cid','=',0)->get();
+        $photo=Photo::where('status','=',1)->where('cid','=',$cid)->limit(5)->get();
         if(!$photo){
             $photo=array(0=>array('position'=>"",'cid'=>"0",'msg'=>""));
         }
@@ -44,14 +45,17 @@ class PhotoController extends Controller
                          $phs[$k]['position']=asset(Storage::url($path));
                          $phs[$k]['cid']=$request->cid;
                          //加水印，and调整大小
+
+
                      }else{
                          echo '文件不合法';
                      }
                  }
              }
-             var_dump($phs);
              $re=DB::table('photos')->insert($phs);
-             var_dump($re);
+             if($re){
+                 return redirect()->back();
+             }
 
          }
 
