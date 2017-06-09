@@ -44,5 +44,7 @@ Route::get('/article/{id}', 'BlogController@showArticleDetail');
 Route::get('/photo', 'PhotoController@index');
 //s上传图片
 Route::post('/photo/upload', 'PhotoController@upload');
+//修改图片的描述
+Route::post('/photo/update/{id}', 'PhotoController@upload');
 
 //后台路由

@@ -49,8 +49,12 @@
                                     @endif
                             <img alt="" style="height:500px;width:750px;" src="{{$p->position}}" />
                             <div class="carousel-caption">
-                                <h4 ondblclick=" @if(Session::has('user'))modifymsg({{$p->id}})@endif" style="color:#928aff">
-                                    {{$p->msg}}
+                                <h4  style="color:#928aff;font-weight:400;font-size:26px;">
+                                    @if(!$p->msg)
+                                        <input type="text"  @if(Session::has('user')) id="img-btn{{$p->id}}" onblur="storemsg({{$p->id}})" ondblclick="modifymsg({{$p->id}})"   placeholder="点击这里添加描述" @endif class="img-msg" readonly="true">
+                                        @else
+                                        <input type="text"  @if(Session::has('user'))   id="img-btn{{$p->id}}" onblur="storemsg({{$p->id}})" ondblclick="modifymsg({{$p->id}})" @endif class="img-msg" readonly="true" value="{{$p->msg}}">
+                                    @endif
                                 </h4>
                             </div>
                         </div>
@@ -60,9 +64,21 @@
             </div>
         </div>
               <script>
-                    var modifymsg=function(id){
-                       alert(id);
-                  }
+                    var modifymsg=function(id) {
+                        $("#img-btn"+id).removeAttr("readonly");
+                    };
+                    var storemsg=function(id){
+                        $("#img-btn"+id).attr("readonly",'true');
+                        $.ajax({
+                            type: "POST",
+                            url:"{{url('/photo/update')}}/"+id,
+                            data: {"_token":"{{csrf_token()}}"},// 你的formid
+                            async: false,
+                            success: function(data) {
+                                alert(data);
+                            }
+                        });
+                    }
               </script>
 
     </div>

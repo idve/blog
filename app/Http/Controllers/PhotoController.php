@@ -61,5 +61,11 @@ class PhotoController extends Controller
 
     }
 
+    public function update($id,Request $request)
+    {
+           echo $id;
+           var_dump($request->all());
+    }
+
 
 }
