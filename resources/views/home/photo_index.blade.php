@@ -18,11 +18,21 @@
         <div class="row clearfix zg-photo">
             <div class="page-header zg-photo-header">
                 <h1 class="column col-sm-offset-0 col-sm-5">相册
-                    <select class="zg-select-photo ">
-                            <option value="0">青春纪念册</option>
-                            <option value="0">岁月相机</option>
-                            <option value="0">欢乐时光</option>
+                    <select id="cidbtn" class="zg-select-photo ">
+                            <option @if($photo->cid_top==0) selected @endif value="0" >青春纪念册</option>
+                            <option @if($photo->cid_top==1) selected @endif value="1" >岁月相机</option>
+                            <option @if($photo->cid_top==2) selected @endif value="2">欢乐时光</option>
                         </select>
+
+                    <script>
+                        $(function(){
+                           $("#cidbtn").change(function(){
+                               var cid=$(this).val();
+                               window.location.href=cid;
+                           })
+                        });
+                    </script>
+
                     @if(Session::has('user'))
                         <button class="zg-cate-photo" data-toggle="modal" data-target="#upload_photo">上传照片</button>
 
@@ -32,6 +42,7 @@
             <div class="col-lg-offset-2 col-md-8 column ">
                 <div class="carousel slide" id="carousel-1">
                     <ol class="carousel-indicators">
+
                         @foreach($photo as $k=>$p)
                             @if($k==0)
                         <li data-slide-to="{{$k}}" data-target="#carousel-1" class="active"></li>
@@ -72,10 +83,13 @@
                         $.ajax({
                             type: "POST",
                             url:"{{url('/photo/update')}}/"+id,
-                            data: {"_token":"{{csrf_token()}}"},// 你的formid
+                            data: {
+                                "_token":"{{csrf_token()}}",
+                                'msg':$("#img-btn"+id).val()
+                            },// 你的formid
                             async: false,
                             success: function(data) {
-                                alert(data);
+                                console.log(data);
                             }
                         });
                     }
@@ -112,6 +126,7 @@
                         <div id="pp"></div>
                     </div>
                     <script>
+                        //添加一张相片就显示一张相片
                         $(document).ready(function () {
                             $("#upload-photo").change(function () {
                                 $('#pp').html("");

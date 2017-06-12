@@ -19,6 +19,7 @@ class PhotoController extends Controller
         if(!$photo){
             $photo=array(0=>array('position'=>"",'cid'=>"0",'msg'=>""));
         }
+        $photo->cid_top=$cid;
         return view('home.photo_index',compact('photo'));
     }
 
@@ -63,8 +64,15 @@ class PhotoController extends Controller
 
     public function update($id,Request $request)
     {
-           echo $id;
-           var_dump($request->all());
+        $photo=Photo::findOrfail($id);
+            $photo->msg=$request->msg;
+            $re=$photo->save();
+        return $request->msg;
+    }
+
+    public function show($cid)
+    {
+        return $this->index($cid);
     }
 
 

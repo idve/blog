@@ -41,10 +41,12 @@ Route::get('/article/{id}/delete', 'BlogController@delArticle');
 Route::get('/article/{id}', 'BlogController@showArticleDetail');
 
 //相册路由
-Route::get('/photo', 'PhotoController@index');
+Route::get('/photo/{cid}', 'PhotoController@index');
 //s上传图片
 Route::post('/photo/upload', 'PhotoController@upload');
 //修改图片的描述
-Route::post('/photo/update/{id}', 'PhotoController@upload');
+Route::post('/photo/update/{id}', 'PhotoController@update');
+
+Route::get('/photo/show/{id}', 'PhotoController@show');
 
 //后台路由

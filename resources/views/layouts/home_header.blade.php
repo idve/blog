@@ -13,7 +13,7 @@
             <ul class="nav navbar-nav" >
                 <li class="active"><a href="{{url('/')}}">首页</a></li>
                 <li><a href="{{url('/article/')}}">文章</a></li>
-                <li><a href="{{url('/photo')}}">相册</a></li>
+                <li><a href="{{url('/photo/0')}}">相册</a></li>
                 <li><a href="#contact">音乐</a></li>
                 <li><a href="#contact">联系我</a></li>
                 @if(Session::has('user'))
@@ -28,7 +28,7 @@
                     </li>
                 @else
                     <li><a href="{{url('/login')}}">登陆</a></li>
-                    <li><a href="{{url('/regist')}}">注册</a></li>
+                   {{-- <li><a href="{{url('/regist')}}">注册</a></li>--}}
                 @endif
             </ul>
         </div><!--/.nav-collapse -->

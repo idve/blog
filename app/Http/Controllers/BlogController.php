@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cate;
 use App\Hot;
 use App\Http\Requests\StoreBlogPost;
+use App\Photo;
 use App\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,6 +35,13 @@ class BlogController extends Controller
         if($hots){
             $data['hots']=$hots;
         }
+
+        //调用图片
+        $photo=Photo::limit(3)->get();
+          if($photo){
+              $data['photo']=$photo;
+          }
+
             return view('home.index', compact('data'));
     }
 
