@@ -37,7 +37,7 @@ class BlogController extends Controller
         }
 
         //调用图片
-        $photo=Photo::limit(3)->get();
+        $photo=Photo::orderBy('id','desc')->get();
           if($photo){
               $data['photo']=$photo;
           }
